@@ -1,9 +1,6 @@
 package com.sinfonier.spouts;
 
-import java.util.Scanner;
-
 public class YourSpout extends BaseSinfonierSpout {
-
 
     // Class variables
 
@@ -28,8 +25,7 @@ public class YourSpout extends BaseSinfonierSpout {
         // Use this.addField(String key, Object value) or this.setJson(String json)
         // to build the tuple.
 
-
-        // emit();  // Call emit() always at the end of this methods.
+        // emit();  // Call emit() always at the end of this method.
 
     }
 

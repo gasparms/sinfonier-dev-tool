@@ -2,11 +2,10 @@ package com.sinfonier.drains;
 
 public class YourDrain extends BaseSinfonierDrain {
 
-
+    // Must implement constructor. Do not touch
     public YourDrain(String path) {
         super(path);
     }
-
 
     @Override
     public void userprepare() {
@@ -18,7 +17,7 @@ public class YourDrain extends BaseSinfonierDrain {
     @Override
     public void userexecute() {
 
-        // This method will be executed every ingoing tuple
+        // TO-DO: Write code here. This method will be called every ingoing tuple
     }
 
     @Override
@@ -28,6 +27,8 @@ public class YourDrain extends BaseSinfonierDrain {
 
     @Override
     public void tickTupleCase() {
-        super.tickTupleCase();
+        // Write tickTuple case. This method will be called every tickTuple.
+        // Usually is used for flush data, send alarms, window event ...
+        // If your module not use this feature leave empty
     }
 }

@@ -19,7 +19,7 @@ public class TestYourBolt {
     @Test
     public void testYourBolt() {
         // Instantiate your module
-        Map<String, Object> result = Runner.run(ComponentType.BOLT, YourBolt.class);
+        Map<String, Object> result = Runner.run(ComponentType.BOLT, MultiplyBolt.class);
 
         // Code the test conditions
         Assert.assertNotNull(result.get("result"));

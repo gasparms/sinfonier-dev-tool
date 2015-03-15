@@ -5,7 +5,9 @@ import com.sinfonier.base.BaseComponent;
 
 public abstract class BaseSinfonierBolt extends BaseComponent {
 
-    public BaseSinfonierBolt(String file) {}
+    // Must implement constructor
+    public BaseSinfonierBolt(String path) {
+    }
 
     public abstract void userprepare();
 
