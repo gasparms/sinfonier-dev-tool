@@ -32,7 +32,8 @@ public abstract class JSONHandler {
         }
 
         try {
-            this.json = mapper.readValue(input, new TypeReference<Map<String, Object>>() {});
+            this.json = mapper.readValue(input, new TypeReference<Map<String, Object>>() {
+            });
         } catch (JsonParseException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
@@ -44,6 +45,7 @@ public abstract class JSONHandler {
 
     /**
      * Add <key,value> to current tuple.
+     *
      * @param key
      * @param value
      */
@@ -71,6 +73,7 @@ public abstract class JSONHandler {
 
     /**
      * Get field in the tuple. Use . to access nested fields. (i.e. : user.lang)
+     *
      * @param key
      * @return
      */
@@ -121,6 +124,7 @@ public abstract class JSONHandler {
 
     /**
      * Check if field with key exists in the tuple.
+     *
      * @param key Key to check
      * @return {@code true} if exists or {@code false} in other case.
      */
@@ -150,6 +154,7 @@ public abstract class JSONHandler {
 
     /**
      * Replace or set current tuple for given json.
+     *
      * @param json Json to set or replace.
      */
     public void setJson(String json) {
@@ -167,10 +172,40 @@ public abstract class JSONHandler {
 
     /**
      * Get Jackson mapper.
+     *
      * @return
      */
     public ObjectMapper getMapper() {
         return mapper;
     }
 
+
+    /**
+     * Get current tuple.
+     *
+     * @return
+     */
+    public Map<String, Object> getJson() {
+        return json;
+    }
+
+    /**
+     * Get current tuple in raw json format.
+     *
+     * @return
+     */
+    public String getRawJson() {
+        String jsonstr = "";
+        try {
+            jsonstr = mapper.writeValueAsString(this.json);
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return jsonstr;
+    }
 }

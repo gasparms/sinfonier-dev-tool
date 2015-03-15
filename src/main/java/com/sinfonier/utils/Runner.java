@@ -3,10 +3,11 @@ package com.sinfonier.utils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 public class Runner {
 
-    public static void run(ComponentType type, Class _class){
+    public static Map<String, Object> run(ComponentType type, Class _class) {
         try {
             Constructor constructor;
             Object o;
@@ -29,7 +30,7 @@ public class Runner {
                     break;
             }
 
-            o.getClass().getDeclaredMethod("userexecute");
+            return (Map<String, Object>) o.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredMethod("getJson").invoke(o);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -39,6 +40,8 @@ public class Runner {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
 
