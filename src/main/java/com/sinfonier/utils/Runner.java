@@ -43,7 +43,39 @@ public class Runner {
 
         return null;
     }
+    
+    public static Map<String, Object> runPy(ComponentType type, Class _class, String pythonFile) {
+        try {
+            Constructor constructor;
+            Object o;
+            switch (type){
+                case SPOUT:
+                    constructor = _class.getConstructor(String.class, String.class);
+                    o = constructor.newInstance("", pythonFile);
+                    o.getClass().getDeclaredMethod("run").invoke(o);
+                    break;
+                case BOLT:
+                case DRAIN:
+                default:
+                    constructor = _class.getConstructor(String.class, String.class);
+                    o = constructor.newInstance("", pythonFile);
+                    o.getClass().getDeclaredMethod("run").invoke(o);
+                    break;
+            }
 
+            return (Map<String, Object>) o.getClass().getDeclaredMethod("getJson").invoke(o);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 
 }

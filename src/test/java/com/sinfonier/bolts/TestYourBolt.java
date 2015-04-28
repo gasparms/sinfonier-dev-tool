@@ -19,10 +19,15 @@ public class TestYourBolt {
     @Test
     public void testYourBolt() {
         // Instantiate your module
-        Map<String, Object> result = Runner.run(ComponentType.BOLT, Calculator.class);
+    	
+    	// Java
+        //Map<String, Object> result = Runner.run(ComponentType.BOLT, ForocochesUserParsing.class);
+    	
+    	// Python
+        Map<String, Object> result = Runner.runPy(ComponentType.BOLT, LauncherPyBolts.class, "addtimestamp.py");
 
         // Code the test conditions
-        Assert.assertNotNull(result.get("result"));
-        Assert.assertEquals(4, Integer.parseInt(result.get("result").toString()));
+        Assert.assertNotNull(result.get("timestamp"));
+        Assert.assertEquals("testing get json fields", result.get("fieldfromjson").toString());
     }
 }
