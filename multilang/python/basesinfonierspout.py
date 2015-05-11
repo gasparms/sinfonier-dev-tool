@@ -7,7 +7,7 @@ import json
 MarkEmit = "EMIT:"
 MarkKill = "-ModuleFinishMark-"
 
-class BaseSinfonierBolt():
+class BaseSinfonierSpout():
 
   def __init__(self):
 
@@ -17,6 +17,11 @@ class BaseSinfonierBolt():
 
     self.config = dict()
     self.d = dict()
+    self.dinput = dict()
+    self.it = 0
+    self.itmax = int(sys.argv[3])
+    if self.itmax == 0:
+        self.itmax = float("inf")
 
     # Parse module.properties
     moduleproperties = str(sys.argv[1])
@@ -29,7 +34,7 @@ class BaseSinfonierBolt():
     # Parse input.json
     inputjsonfile = str(sys.argv[2])
     try:
-      self.d = json.loads(open(inputjsonfile).read())
+      self.dinput = json.loads(open(inputjsonfile).read())
     except:
       self.log("Error parsing input.json file, maybe it's not a valid JSON format")   
  
@@ -45,11 +50,11 @@ class BaseSinfonierBolt():
     else:
         return ""
 
-  def userprocess(self):
+  def usernextTuple(self):
 
     raise NotImplementedError("update: This method must be implemented in your class")
 
-  def userprepare(self):
+  def useropen(self):
 
     raise NotImplementedError("update: This method must be implemented in your class")
 
@@ -87,18 +92,23 @@ class BaseSinfonierBolt():
   def run(self):
     
     self.initialize()
-    self.userprepare()
-    self.userprocess()
-
-  def emit(self):
-   
-    self.log("Result tuple: "+json.dumps(self.d))
-    print MarkEmit+json.dumps(self.d)
-    sys.stdout.flush()
+    self.useropen()
+    # Maximum iterations specified
+    while self.it < self.itmax:
+        # Reset input JSON
+        self.d = self.dinput.copy()
+        self.usernextTuple()
     self.userclose()
     print MarkKill
     sys.stdout.flush()
 
+  def emit(self):
+    
+    self.log("Result tuple: "+json.dumps(self.d))
+    print MarkEmit+json.dumps(self.d)
+    sys.stdout.flush()
+    self.it = self.it + 1
+    
   def getJson(self):
       
     return self.d

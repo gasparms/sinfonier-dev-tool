@@ -50,9 +50,7 @@ public class Runner {
             Object o;
             switch (type){
                 case SPOUT:
-                    constructor = _class.getConstructor(String.class, String.class);
-                    o = constructor.newInstance("", pythonFile);
-                    o.getClass().getDeclaredMethod("run").invoke(o);
+                	System.out.println("Set parameter 'iterations' (<Number of Emissions>) if you are testing Spouts. It's mandatory.");
                     break;
                 case BOLT:
                 case DRAIN:
@@ -60,10 +58,41 @@ public class Runner {
                     constructor = _class.getConstructor(String.class, String.class);
                     o = constructor.newInstance("", pythonFile);
                     o.getClass().getDeclaredMethod("run").invoke(o);
+                    return (Map<String, Object>) o.getClass().getDeclaredMethod("getJson").invoke(o);
+            }
+            
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
+    public static Map<String, Object> runPy(ComponentType type, Class _class, String pythonFile, int iterations) {
+        try {
+            Constructor constructor;
+            Object o;
+            String iter = Integer.toString(iterations);
+            switch (type){
+                case SPOUT:
+                    constructor = _class.getConstructor(String.class, String.class, String.class);
+                    o = constructor.newInstance("", pythonFile, iter);
+                    o.getClass().getDeclaredMethod("run").invoke(o);
+                    return (Map<String, Object>) o.getClass().getDeclaredMethod("getJson").invoke(o);
+                case BOLT:
+                case DRAIN:
+                default:
+                    System.out.println("Remove parameter 'iterations' (<Number of Emissions>) if you are testing Bolts or Drains. That param is just for Spouts.");
                     break;
             }
 
-            return (Map<String, Object>) o.getClass().getDeclaredMethod("getJson").invoke(o);
+            
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {

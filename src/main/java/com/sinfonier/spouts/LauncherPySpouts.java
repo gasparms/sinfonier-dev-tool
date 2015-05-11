@@ -1,4 +1,4 @@
-package com.sinfonier.bolts;
+package com.sinfonier.spouts;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 /**
  * PythonBolt Class.
  */
-public class LauncherPyBolts {
+public class LauncherPySpouts {
 	
 	static final String MarkEmit = "EMIT:";
 	static final String MarkKill = "-ModuleFinishMark-";
@@ -20,12 +20,14 @@ public class LauncherPyBolts {
 	private String moduleProperties = "";
 	private String jsonInput = "";
 	private Map<String, Object> resultmap = new HashMap<String, Object>();
+	private String numOfIterations = "0";
 
-    public LauncherPyBolts(String xmlFile, String pythonFile) {
+    public LauncherPySpouts(String xmlFile, String pythonFile, String numIt) {
         
     	pythonFilePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("target.*", "multilang/python/")+pythonFile;
     	moduleProperties = getClass().getClassLoader().getResource("module.properties").getPath();
     	jsonInput = getClass().getClassLoader().getResource("input.json").getPath();
+    	numOfIterations = numIt;
     	
     }
 
@@ -35,7 +37,7 @@ public class LauncherPyBolts {
     
     public void run() {
     	
-    	ProcessBuilder builder = new ProcessBuilder("python2.7", pythonFilePath, moduleProperties, jsonInput);
+    	ProcessBuilder builder = new ProcessBuilder("python2.7", pythonFilePath, moduleProperties, jsonInput, numOfIterations);
     	try {
 			Process _subprocess = builder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(_subprocess.getInputStream()));
@@ -57,6 +59,7 @@ public class LauncherPyBolts {
 
 	    		}
 	    	}
+	    	
 	    	try {
 				resultmap = new ObjectMapper().readValue(emittedjson, HashMap.class);
 			} catch (Exception e) {

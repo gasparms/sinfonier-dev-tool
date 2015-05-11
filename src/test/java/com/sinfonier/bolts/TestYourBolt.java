@@ -21,13 +21,17 @@ public class TestYourBolt {
         // Instantiate your module
     	
     	// Java
-        //Map<String, Object> result = Runner.run(ComponentType.BOLT, ForocochesUserParsing.class);
+        //Map<String, Object> result = Runner.run(ComponentType.BOLT, YourJava.class);
     	
     	// Python
+    	//Map<String, Object> result = Runner.runPy(ComponentType.BOLT, LauncherPyBolts.class, "pythonboltfile.py");
         Map<String, Object> result = Runner.runPy(ComponentType.BOLT, LauncherPyBolts.class, "addtimestamp.py");
 
         // Code the test conditions
-        Assert.assertNotNull(result.get("timestamp"));
-        Assert.assertEquals("testing get json fields", result.get("fieldfromjson").toString());
+        /*Assert.assertNotNull(result.get("username"));
+        Assert.assertEquals("asdfasdf", result.get("username").toString());
+        
+        Assert.assertNotNull(result.get("join_date"));
+        Assert.assertEquals("1217775487", result.get("join_date").toString());*/
     }
 }
