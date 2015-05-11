@@ -1,4 +1,4 @@
-package com.sinfonier.bolts;
+package com.sinfonier.drains;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 /**
  * PythonBolt Class.
  */
-public class LauncherPyBolts {
+public class LauncherPyDrains {
 	
 	static final String MarkEmit = "EMIT:";
 	static final String MarkKill = "-ModuleFinishMark-";
@@ -21,7 +21,7 @@ public class LauncherPyBolts {
 	private String jsonInput = "";
 	private Map<String, Object> resultmap = new HashMap<String, Object>();
 
-    public LauncherPyBolts(String xmlFile, String pythonFile) {
+    public LauncherPyDrains(String xmlFile, String pythonFile) {
         
     	pythonFilePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("target.*", "multilang/python/")+pythonFile;
     	moduleProperties = getClass().getClassLoader().getResource("module.properties").getPath();
@@ -44,10 +44,7 @@ public class LauncherPyBolts {
 	    	while (true) {
 	    		line = reader.readLine();
 	    		if (line != null) {
-		    		if (line.startsWith(MarkEmit)){
-		    			emittedjson = line.replace(MarkEmit, "");
-		    		}
-		    		else if (line.equals(MarkKill)){
+		    		if (line.equals(MarkKill)){
 		    			_subprocess.destroy();
 		    			break;
 		    		}

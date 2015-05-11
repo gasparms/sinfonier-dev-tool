@@ -7,7 +7,7 @@ import json
 MarkEmit = "EMIT:"
 MarkKill = "-ModuleFinishMark-"
 
-class BaseSinfonierBolt():
+class BaseSinfonierDrain():
 
   def __init__(self):
 
@@ -89,16 +89,10 @@ class BaseSinfonierBolt():
     self.initialize()
     self.userprepare()
     self.userprocess()
-
-  def emit(self):
-   
-    self.log("Result tuple: "+json.dumps(self.d))
-    print MarkEmit+json.dumps(self.d)
-    sys.stdout.flush()
     self.userclose()
     print MarkKill
     sys.stdout.flush()
-
+    
   def getJson(self):
       
     return self.d
