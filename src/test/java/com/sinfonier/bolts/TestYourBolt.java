@@ -19,10 +19,19 @@ public class TestYourBolt {
     @Test
     public void testYourBolt() {
         // Instantiate your module
-        Map<String, Object> result = Runner.run(ComponentType.BOLT, Calculator.class);
+    	
+    	// Java
+        //Map<String, Object> result = Runner.run(ComponentType.BOLT, YourJava.class);
+    	
+    	// Python
+    	//Map<String, Object> result = Runner.runPy(ComponentType.BOLT, LauncherPyBolts.class, "pythonboltfile.py");
+        Map<String, Object> result = Runner.runPy(ComponentType.BOLT, LauncherPyBolts.class, "addtimestamp.py");
 
         // Code the test conditions
-        Assert.assertNotNull(result.get("result"));
-        Assert.assertEquals(4, Integer.parseInt(result.get("result").toString()));
+        /*Assert.assertNotNull(result.get("username"));
+        Assert.assertEquals("asdfasdf", result.get("username").toString());
+        
+        Assert.assertNotNull(result.get("join_date"));
+        Assert.assertEquals("1217775487", result.get("join_date").toString());*/
     }
 }
