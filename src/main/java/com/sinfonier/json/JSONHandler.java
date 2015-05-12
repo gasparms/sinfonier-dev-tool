@@ -169,6 +169,15 @@ public abstract class JSONHandler {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Replace current tuple by given tuple. Useful if you make deep changes in tuple.
+     * 
+     * @param json Tuple to set up.
+     */
+    public void setJSon(Map<String, Object> json) {
+        this.json = json;
+    }
 
     /**
      * Get Jackson mapper.
