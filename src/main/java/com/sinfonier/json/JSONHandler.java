@@ -140,7 +140,7 @@ public abstract class JSONHandler {
 
         String jsonstr = "";
         try {
-            jsonstr = mapper.writeValueAsString(this.json);
+	    jsonstr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.json);
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
