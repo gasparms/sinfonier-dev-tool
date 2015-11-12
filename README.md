@@ -11,4 +11,4 @@ Tool to build modules for Sinfonier project.
 
 ## Virtual Machine
 
-[Download using Torrent](http://sinfonier-project.net/torrents/SinfonierDevelopmentEnvironment-v0.1.torrent)
+[Download virtual machine](https://goo.gl/owpyr4)
