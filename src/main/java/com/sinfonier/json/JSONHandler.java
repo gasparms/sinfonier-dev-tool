@@ -140,7 +140,7 @@ public abstract class JSONHandler {
 
         String jsonstr = "";
         try {
-            jsonstr = mapper.writeValueAsString(this.json);
+	    jsonstr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this.json);
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
@@ -168,6 +168,15 @@ public abstract class JSONHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Replace current tuple by given tuple. Useful if you make deep changes in tuple.
+     * 
+     * @param json Tuple to set up.
+     */
+    public void setJSon(Map<String, Object> json) {
+        this.json = json;
     }
 
     /**

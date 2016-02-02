@@ -1,8 +1,10 @@
 package com.sinfonier.drains;
 
 
+import com.sinfonier.spouts.LauncherPySpouts;
 import com.sinfonier.utils.ComponentType;
 import com.sinfonier.utils.Runner;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,8 +19,13 @@ public class TestYourDrain {
 
     @Test
     public void testYourDrain() {
-        // Instantiate your module
-        Map<String, Object> result = Runner.run(ComponentType.DRAIN, YourDrain.class);
+        
+    	// Java
+        //Map<String, Object> result = Runner.run(ComponentType.DRAIN, YourDrain.class);
+        
+        // Python
+    	//Map<String, Object> result = Runner.runPy(ComponentType.DRAIN, LauncherPyDrains.class, "pythondrainfile.py");
+        Map<String, Object> result = Runner.runPy(ComponentType.DRAIN, LauncherPyDrains.class, "logit.py");
 
         // Code the test conditions
     }

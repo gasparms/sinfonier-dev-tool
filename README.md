@@ -8,3 +8,7 @@ Tool to build modules for Sinfonier project.
     3. Set your input tuple json in src/main/resources/input.json file or use tweet default.
     4.  Code your test.  Execute Runner and retrieve result tuple. Write your asserts.
     5. Your module is ready to be uploaded to Sinfonier Project.
+
+## Virtual Machine
+
+[Download virtual machine](https://goo.gl/owpyr4)

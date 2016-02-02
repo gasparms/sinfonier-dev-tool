@@ -1,0 +1,70 @@
+package com.sinfonier.drains;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.codehaus.jackson.map.ObjectMapper;
+
+/**
+ * PythonBolt Class.
+ */
+public class LauncherPyDrains {
+	
+	static final String MarkEmit = "EMIT:";
+	static final String MarkKill = "-ModuleFinishMark-";
+	
+	private String pythonFilePath = "";
+	private String moduleProperties = "";
+	private String jsonInput = "";
+	private Map<String, Object> resultmap = new HashMap<String, Object>();
+
+    public LauncherPyDrains(String xmlFile, String pythonFile) {
+        
+    	pythonFilePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("target.*", "multilang/python/")+pythonFile;
+    	moduleProperties = getClass().getClassLoader().getResource("module.properties").getPath();
+    	jsonInput = getClass().getClassLoader().getResource("input.json").getPath();
+    	
+    }
+
+    public Map<String, Object> getJson() {
+        return resultmap;
+    }
+    
+    public void run() {
+    	
+    	ProcessBuilder builder = new ProcessBuilder("python2.7", pythonFilePath, moduleProperties, jsonInput);
+    	try {
+			Process _subprocess = builder.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(_subprocess.getInputStream()));
+	    	String line = null;
+	    	String emittedjson = "{}";
+	    	while (true) {
+	    		line = reader.readLine();
+	    		if (line != null) {
+		    		if (line.equals(MarkKill)){
+		    			_subprocess.destroy();
+		    			break;
+		    		}
+		    		else {
+		    			System.out.println(line);
+		    		}
+
+	    		}
+	    	}
+	    	try {
+				resultmap = new ObjectMapper().readValue(emittedjson, HashMap.class);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    	
+	    	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+    }
+
+}
